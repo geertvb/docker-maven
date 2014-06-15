@@ -1,16 +1,16 @@
-#
-# Maven Dockerfile
-#
-# https://github.com/GeertVB/docker-maven
-#
+FROM geertvb/java
 
-FROM 192.168.0.29:5000/geertvb/docker-java
-
-RUN \
-  apt-get update && \
-  apt-get -y upgrade
-
-RUN \
-  apt-get install -y maven
+RUN mkdir -p /opt/maven/repository 
   
-CMD /bin/bash
+ADD http://repo1.maven.org/maven2/org/apache/maven/apache-maven/3.0.5/apache-maven-3.0.5-bin.tar.gz /opt/maven/apache-maven-3.0.5-bin.tar.gz
+
+RUN \
+  tar -xzvf /opt/maven/apache-maven-3.0.5-bin.tar.gz -C /opt/maven && \
+  rm -rf /opt/maven/apache-maven-3.0.5-bin.tar.gz && \
+  ln -s /opt/maven/apache-maven-3.0.5 /opt/maven/maven
+
+ADD maven-profile.sh /etc/profile.d/maven-profile.sh
+
+RUN chmod 755 /etc/profile.d/maven-profile.sh && \
+
+CMD /bin/bash -l
