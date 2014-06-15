@@ -11,6 +11,6 @@ RUN \
 
 ADD maven-profile.sh /etc/profile.d/maven-profile.sh
 
-RUN chmod 755 /etc/profile.d/maven-profile.sh && \
+RUN chmod 755 /etc/profile.d/maven-profile.sh
 
 CMD /bin/bash -l
